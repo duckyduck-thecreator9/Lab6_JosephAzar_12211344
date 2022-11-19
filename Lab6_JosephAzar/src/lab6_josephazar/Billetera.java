@@ -11,9 +11,9 @@ package lab6_josephazar;
  */
 public class Billetera {
     private int puntos_consumo;
-    private double costo;
+    private int costo;
 
-    public Billetera(int puntos_consumo, double costo) {
+    public Billetera(int puntos_consumo, int costo) {
         this.puntos_consumo = puntos_consumo;
         this.costo = costo;
     }
@@ -30,7 +30,7 @@ public class Billetera {
         return costo;
     }
 
-    public void setCosto(double costo) {
+    public void setCosto(int costo) {
         this.costo = costo;
     }
 

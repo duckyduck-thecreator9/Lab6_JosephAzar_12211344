@@ -15,24 +15,37 @@ public class Jugador {
     private String nombre;
     private String usuario;//unico
     private int nivel;
+    private int consumo;
     private Alimentos alimento;
     private ArrayList<Jugador> amigos;
     private ArrayList<Solicitud> solicitudes;
     private Billetera billetera;    
 
-    public Jugador(String nombre, String usuario, int nivel, Alimentos alimento, ArrayList<Jugador> amigos, ArrayList<Solicitud> solicitudes, Billetera billetera) {
+    public Jugador(String nombre, String usuario, int nivel, int consumo, Alimentos alimento, ArrayList<Jugador> amigos, ArrayList<Solicitud> solicitudes, Billetera billetera) {
         this.nombre = nombre;
         this.usuario = usuario;
         this.nivel = nivel;
+        this.consumo = consumo;
         this.alimento = alimento;
         this.amigos = amigos;
         this.solicitudes = solicitudes;
         this.billetera = billetera;
     }
 
+    public int getConsumo() {
+        return consumo;
+    }
+
+    public void setConsumo(int consumo) {
+        this.consumo = consumo;
+    }
+
+    
+
     public Jugador() {
     }
 
+    
     public String getNombre() {
         return nombre;
     }
