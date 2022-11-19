@@ -104,7 +104,7 @@ public class Jugador {
 
     @Override
     public String toString() {
-        return "Jugador{" + "nombre=" + nombre + ", usuario=" + usuario + ", nivel=" + nivel + ", alimento=" + alimento + ", amigos=" + amigos + ", solicitudes=" + solicitudes + ", billetera=" + billetera + '}';
+        return nombre;
     }
     
     

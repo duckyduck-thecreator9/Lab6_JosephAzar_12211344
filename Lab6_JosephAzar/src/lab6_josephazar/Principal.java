@@ -19,22 +19,27 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class Principal extends javax.swing.JFrame {
 
+    static ArrayList<Jugador> amigos = new ArrayList<Jugador>();
+    static ArrayList<Solicitud> solicitudes = new ArrayList<Solicitud>();
+    static Billetera billetera = new Billetera(500, 0);
+    static Alimentos pan = new Alimentos("Pan", 0, "Panaderia", 20);
+    static ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+    static ArrayList<Alimentos> alimentos = new ArrayList<Alimentos>();
+    static ArrayList<Billetera> billeteras = new ArrayList<Billetera>();
+    static ArrayList categorias = new ArrayList();
+    
+    static String[] nombres = {"Azar", "Pancho", "Juan", "Carlos", "Rigoberto"};
+    static String[] usuarios = {"DuckyDuck", "Demonx", "Milkcarton", "SonofGun", "Partyguy"};
+    
     /**
      * Creates new form Principal
      */
     public Principal() {
         
-        DefaultListModel m = (DefaultListModel)tree_jugadores.getModel();
-        m.removeAllElements();
-        m.addElement(pan);
-        
-        for (int i = 0; i < jugadores.size(); i++) {
-            nodoAlimento = new DefaultMutableTreeNode(jugadores.get(i));
-        }
-        
         
         
         initComponents();
+       
     DefaultTableModel model = (DefaultTableModel) jtable_alimentos.getModel();
     model.addRow(new Object[]{ pan.getNombre(), pan.getCosto(), pan.getCalorias() } );
     jtable_alimentos.setModel(model);
@@ -54,8 +59,10 @@ public class Principal extends javax.swing.JFrame {
             jt_alimencation.setModel(modelo);
         }
         
+        categorias.add(pan.getCategoria());
         alimentos.add(pan);
         billeteras.add(billetera);
+        llenarTree();
     }
 
      
@@ -68,6 +75,10 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pop_amistad = new javax.swing.JPopupMenu();
+        Eliminar = new javax.swing.JMenuItem();
+        Seleccionar = new javax.swing.JMenuItem();
+        Solicitud = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         main_tab = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -83,6 +94,8 @@ public class Principal extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         jc_solocitudes = new javax.swing.JComboBox<>();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -113,15 +126,38 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jt_ibilleteras = new javax.swing.JTable();
 
+        Eliminar.setText("Eliminar");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
+        pop_amistad.add(Eliminar);
+
+        Seleccionar.setText("Seleccionar");
+        Seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SeleccionarActionPerformed(evt);
+            }
+        });
+        pop_amistad.add(Seleccionar);
+
+        Solicitud.setText("Enviar Solicitud");
+        Solicitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SolicitudActionPerformed(evt);
+            }
+        });
+        pop_amistad.add(Solicitud);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Simuladoro de Engordar");
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Alimentos");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Pan");
-        treeNode1.add(treeNode2);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         tree_jugadores.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        tree_jugadores.setComponentPopupMenu(pop_amistad);
         jScrollPane1.setViewportView(tree_jugadores);
 
         jb_alimentar.setText("Alimentar");
@@ -230,6 +266,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setText("Agregar");
+
+        jButton7.setText("Rechazar");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -240,9 +280,14 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jc_solocitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14))
+                            .addComponent(jLabel14)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jc_solocitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -257,7 +302,11 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jc_solocitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         main_tab.addTab("Amigos", jPanel4);
@@ -646,7 +695,10 @@ public class Principal extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         com_categoria.addItem(jt_categoria.getText());
+        categorias.add(jt_categoria.getText());
         jt_categoria.setText("");
+        
+        llenarTree();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jt_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jt_categoriaActionPerformed
@@ -697,7 +749,9 @@ public class Principal extends javax.swing.JFrame {
         int alimento = jtable_alimentos.getSelectedRow();
         int jugador = jt_alimencation.getSelectedRow();
         int costo = (int) (model).getValueAt(alimento, 1);
+        System.out.println(costo);
         int consumo = jugadores.get(jugador).getConsumo();
+        System.out.println(consumo);
         
         if (costo <= consumo) {
             
@@ -707,7 +761,7 @@ public class Principal extends javax.swing.JFrame {
         } else if (costo > consumo) {
             JOptionPane.showMessageDialog(this, "No tiene suficiente puntos de consumo");
         }
-        
+        llenarTree();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -717,7 +771,7 @@ public class Principal extends javax.swing.JFrame {
         int Billetera = jt_ibilleteras.getSelectedRow();
         int jugador = jt_alimencation.getSelectedRow();
         
-        int costo = (int)(modelo).getValueAt(Billetera, 1);
+        int costo = (int)billeteras.get(Billetera).getCosto();
         System.out.println(costo);
         int consumo = jugadores.get(jugador).getConsumo();
         System.out.println(consumo);
@@ -736,6 +790,24 @@ public class Principal extends javax.swing.JFrame {
     private void jc_solocitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jc_solocitudesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jc_solocitudesActionPerformed
+
+    private void SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SeleccionarActionPerformed
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EliminarActionPerformed
+
+    private void SolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SolicitudActionPerformed
+        // TODO add your handling code here:
+//        int a1 = tree_jugadores.getSelectionCount();
+//        tree_jugadores.getComponent(a1);
+//        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree_jugadores.getLastSelectedPathComponent();
+//        (Jugador)node.getFirstLeaf().get
+//        System.out.println(tree_jugadores.getName());
+        
+    }//GEN-LAST:event_SolicitudActionPerformed
 
     /**
      * @param args the command line arguments
@@ -775,12 +847,17 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Eliminar;
+    private javax.swing.JMenuItem Seleccionar;
+    private javax.swing.JMenuItem Solicitud;
     private javax.swing.JComboBox<String> com_categoria;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -818,25 +895,41 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSpinner jt_texto;
     private javax.swing.JTable jtable_alimentos;
     private javax.swing.JTabbedPane main_tab;
+    private javax.swing.JPopupMenu pop_amistad;
     private javax.swing.JTree tree_jugadores;
     // End of variables declaration//GEN-END:variables
-    
-    
-    static ArrayList<Jugador> amigos = new ArrayList<Jugador>();
-    static ArrayList<Solicitud> solicitudes = new ArrayList<Solicitud>();
-    static Billetera billetera = new Billetera(500, 0);
-    static Alimentos pan = new Alimentos("Pan", 0, "Panaderia", 20);
-    static ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-    static ArrayList<Alimentos> alimentos = new ArrayList<Alimentos>();
-    static ArrayList<Billetera> billeteras = new ArrayList<Billetera>();
-    
-    static String[] nombres = {"Azar", "Pancho", "Juan", "Carlos", "Rigoberto"};
-    static String[] usuarios = {"DuckyDuck", "Demonx", "Milkcarton", "SonofGun", "Partyguy"};
         
     public static void jugadores() {
     for (int i = 0; i < 5; i++) {
             Jugador a = new Jugador(nombres[i], usuarios[i], 0, 0, pan, amigos, solicitudes, billetera);
             jugadores.add(a);
         }
+    }
+    
+    public void llenarTree() {
+        
+        DefaultTreeModel m = (DefaultTreeModel) tree_jugadores.getModel();
+        
+        DefaultMutableTreeNode raiz= (DefaultMutableTreeNode) m.getRoot();
+        System.out.println(categorias);
+        raiz.removeAllChildren();
+        for (int i = 0; i < categorias.size(); i++) {
+            System.out.println(i);
+            DefaultMutableTreeNode nodoCategoria = new DefaultMutableTreeNode(categorias.get(i));
+            for (int j = 0; j < alimentos.size(); j++) {
+                if ( alimentos.get(j).getCategoria().equals(categorias.get(i)) ) {
+                    DefaultMutableTreeNode nodoAlimento = new DefaultMutableTreeNode(alimentos.get(j));
+                    for (int k = 0; k < jugadores.size(); k++) {
+                        if (alimentos.get(j).getNombre().equals(jugadores.get(k).getAlimento().getNombre()) ) {
+                            nodoAlimento.add(new DefaultMutableTreeNode(jugadores.get(k)));
+                        }
+                    }
+                     nodoCategoria.add(nodoAlimento);
+                }
+                
+            }
+            raiz.add(nodoCategoria);
+        }
+        m.reload();
     }
 }
